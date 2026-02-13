@@ -80,3 +80,9 @@ def train_pipeline(df, rs_pipeline):
 def save_model(rs_pipeline):
     best_pipeline = rs_pipeline.best_estimator_
     joblib.dump(best_pipeline, 'model.pkl')
+
+df = prepare_df()
+preprocessor = create_preprocessor()
+rs_pipeline = create_pipeline(preprocessor)
+final_pipeline = train_pipeline(df, rs_pipeline)
+save_model(final_pipeline)
