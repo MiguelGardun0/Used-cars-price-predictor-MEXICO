@@ -1,5 +1,5 @@
 from pydantic import BaseModel, Field, ConfigDict
-from typing import Literal
+from typing import Literal, Dict
 import pandas as pd
 import numpy as np
 import joblib
@@ -39,6 +39,10 @@ class Car(BaseModel):
     odometer: float = Field(..., ge=0,le=800000, description="Odometer reading in miles")
     year: int = Field(..., ge=1960, le=2026, description="Manufacturing year between 1960 and 2026")
 
+class PredictResponse(BaseModel):
+    predicted_price: float
+    input_data : Dict
+
 CAT_FEATURES = ["manufacturer", "model", "condition", "cylinders", "fuel", "title_status", "transmission", "drive", "size", "type", "paint_color"]
 NUM_FEATURES = ["odometer", "year"]
 
@@ -47,9 +51,22 @@ app = FastAPI(title="car_price")
 
 @app.get("/")
 def read_root():
-    return {"mensaje": "Hola Mundo"}
+    return {"car price": "predictor"}
 
-  
+@app.post("/prediction")
+def predict(car: Car) -> PredictResponse:
+    car.model_dump()
+    X_new = pd.DataFrame([car])
+    X_new["model"] = X_new["model"].str.strip().str.lower().str.replace(" ","_").str.replace("-","_")
+
+    prediction =loaded_model.predict(X_new)
+    price = np.expm1(prediction[0])
+
+    return PredictResponse (
+        predicted_price = round(price,3),
+        input_data = car
+        )
+
 if __name__ == "__main__":
     uvicorn.run("predict:app", host="127.0.0.1", port=8000, reload=True)
 
