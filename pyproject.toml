@@ -8,6 +8,7 @@ dependencies = [
     "catboost>=1.2.8",
     "fastapi>=0.129.0",
     "flask>=3.1.2",
+    "joblib>=1.5.3",
     "jupyter>=1.1.1",
     "lightgbm>=4.6.0",
     "notebook>=7.5.2",

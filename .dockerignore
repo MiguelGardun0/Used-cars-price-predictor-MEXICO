@@ -1,0 +1,29 @@
+# Git and project management
+.git
+.gitignore
+.python-version
+uv.lock
+
+# Virtual environments
+.venv
+env
+venv
+
+# Python artifacts
+__pycache__
+*.py[cod]
+*$py.class
+
+# Data and large files (CRITICAL for 1.4GB sources)
+sources/
+cache_dir/
+catboost_info/
+*.csv
+*.json
+
+# Documentation and development scripts
+exploration.ipynb
+train.py
+GEMINI.md
+get_uniques.py
+uniques.json
