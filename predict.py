@@ -55,17 +55,22 @@ def read_root():
 
 @app.post("/prediction")
 def predict(car: Car) -> PredictResponse:
-    car.model_dump()
-    X_new = pd.DataFrame([car])
+    data = car.model_dump()
+    X_new = pd.DataFrame([data])
+
     X_new["model"] = X_new["model"].str.strip().str.lower().str.replace(" ","_").str.replace("-","_")
+
+    X_new = X_new[CAT_FEATURES + NUM_FEATURES] 
 
     prediction =loaded_model.predict(X_new)
     price = np.expm1(prediction[0])
 
     return PredictResponse (
-        predicted_price = round(price,3),
-        input_data = car
+        predicted_price = round(float(price),3),
+        input_data = data
         )
+
+
 
 if __name__ == "__main__":
     uvicorn.run("predict:app", host="127.0.0.1", port=8000, reload=True)
