@@ -12,6 +12,7 @@ RUN uv sync --locked
 
 COPY "predict.py" "model.pkl" ./
 
+#Is not necessary when working with Heroku
 EXPOSE 9696
 
-CMD uvicorn predict:app --host 0.0.0.0 --port 9696
+CMD uvicorn predict:app --host 0.0.0.0 --port $PORT
