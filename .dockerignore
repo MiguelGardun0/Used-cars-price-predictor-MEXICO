@@ -1,8 +1,6 @@
 # Git and project management
 .git
 .gitignore
-.python-version
-uv.lock
 
 # Virtual environments
 .venv

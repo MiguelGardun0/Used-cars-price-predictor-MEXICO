@@ -9,6 +9,7 @@ wheels/
 mypage.html
 styles.css
 sources
+data
 
 # Virtual environments
 .venv
