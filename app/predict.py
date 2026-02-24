@@ -46,7 +46,8 @@ class PredictResponse(BaseModel):
 CAT_FEATURES = ["manufacturer", "model", "condition", "cylinders", "fuel", "title_status", "transmission", "drive", "size", "type", "paint_color"]
 NUM_FEATURES = ["odometer", "year"]
 
-loaded_model = joblib.load('models/model.pkl')
+loaded_model = joblib.load("models/model.pkl")
+
 app = FastAPI(title="car_price")
 
 @app.get("/")
