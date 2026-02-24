@@ -6,15 +6,19 @@ WORKDIR /code
 
 ENV PATH="/code/.venv/bin:$PATH"
 
+ENV PYTHONPATH=/code
+
 COPY "pyproject.toml" "uv.lock" ".python-version" ./
 
 RUN uv sync --locked
 
-COPY  "models/model.pkl" ./models
+COPY  "models/" ./models/
 
-COPY "app/predict.py" ./
+COPY "app/" ./app/
+
+COPY "tests/" ./tests/
 
 EXPOSE 9696
 
 
-CMD uvicorn predict:app --host 0.0.0.0 --port ${PORT:-9696}
+CMD uvicorn app.predict:app --host 0.0.0.0 --port ${PORT:-9696}
