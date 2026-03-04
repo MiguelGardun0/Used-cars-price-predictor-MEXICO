@@ -1,5 +1,5 @@
 from pydantic import BaseModel, Field, ConfigDict
-from typing import Literal, Dict
+from typing import Literal, Dict, List
 import pandas as pd
 import numpy as np
 import joblib
@@ -41,7 +41,7 @@ class Car(BaseModel):
 
 class PredictResponse(BaseModel):
     predicted_price: float
-    input_data : Dict
+    confidence_range : List[float]
 
 CAT_FEATURES = ["manufacturer", "model", "condition", "cylinders", "fuel", "title_status", "transmission", "drive", "size", "type", "paint_color"]
 NUM_FEATURES = ["odometer", "year"]
@@ -65,6 +65,9 @@ def predict(car: Car) -> PredictResponse:
 
     prediction =loaded_model.predict(X_new)
     price = np.expm1(prediction[0])
+
+    original_model = loaded_model.get_booster()
+    
 
     return PredictResponse (
         predicted_price = round(float(price),3),
