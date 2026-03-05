@@ -40,6 +40,6 @@ def test_predict_extra_params(car_data):
     car_data["caballos"] = "198hp"
     response = client.post("/prediction", json=car_data)
 
-    assert response.status_code == 422
+    assert response.status_code == 422  
 
         
