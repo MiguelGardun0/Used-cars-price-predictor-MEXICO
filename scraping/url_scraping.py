@@ -39,6 +39,5 @@ while counter:
 
 with open('urls.csv', 'a', newline='', encoding='utf-8') as f:
        writer = csv.writer(f)
-       writer.writerow(['url'])
        for link in links:
            writer.writerow([link])
